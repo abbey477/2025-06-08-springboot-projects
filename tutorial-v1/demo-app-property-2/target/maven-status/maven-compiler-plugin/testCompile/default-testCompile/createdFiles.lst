@@ -1,0 +1,5 @@
+com/example/demoappproperty/controller/PropertyControllerTest.class
+com/example/demoappproperty/service/PropertyDisplayServiceTest.class
+com/example/demoappproperty/controller/DemoAppProperty2ApplicationTests.class
+com/example/demoappproperty/config/AppPropertiesTest.class
+com/example/demoappproperty/DemoAppPropertyIntegrationTest.class
