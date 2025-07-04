@@ -1,0 +1,8 @@
+com/example/recordsdemo/model/Address$Builder.class
+com/example/recordsdemo/RecordsDemoApplication.class
+com/example/recordsdemo/model/Person$Builder.class
+com/example/recordsdemo/model/Contact$Builder.class
+com/example/recordsdemo/model/Address.class
+com/example/recordsdemo/model/Contact.class
+com/example/recordsdemo/service/PersonService.class
+com/example/recordsdemo/model/Person.class

@@ -1,0 +1,5 @@
+com/example/recordsdemo/service/PersonServiceTest.class
+com/example/recordsdemo/model/PersonTest.class
+com/example/recordsdemo/model/ContactTest.class
+com/example/recordsdemo/model/AddressTest.class
+com/example/recordsdemo/RecordsIntegrationTest.class
