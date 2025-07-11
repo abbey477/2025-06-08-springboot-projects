@@ -1,12 +1,16 @@
 package com.example.pdfextractor.service;
 
 
+import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
 
-@Service
+//@Service
 public class PdfTextExtractorService {
 
 
@@ -14,12 +18,13 @@ public class PdfTextExtractorService {
                               float x, float y, float width, float height) {
         PDDocument doc = null;
         try {
-            doc = PDDocument.load(new File(pdfPath));
+
+            doc = Loader.loadPDF(new File(pdfPath));
 
             PDFTextStripper stripper = new PDFTextStripper();
             stripper.setStartPage(pageNumber);
             stripper.setEndPage(pageNumber);
-            stripper.setRegion(new PDRectangle(x, y, width, height));
+            //stripper.setRegion(new PDRectangle(x, y, width, height));
 
             String text = stripper.getText(doc);
 

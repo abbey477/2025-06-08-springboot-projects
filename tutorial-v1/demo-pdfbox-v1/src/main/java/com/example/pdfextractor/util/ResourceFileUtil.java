@@ -4,7 +4,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.ResourceUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -88,5 +90,16 @@ public class ResourceFileUtil {
     public long getFileSize(String filename) throws IOException {
         Resource resource = new ClassPathResource(DATA_FOLDER + filename);
         return resource.contentLength();
+    }
+
+    // Method 1: Using ClassPathResource (recommended)
+    public static File getPdfFile(String fileName) throws IOException {
+        ClassPathResource resource = new ClassPathResource("pdf/" + fileName);
+        return resource.getFile();
+    }
+
+    // Method 2: Using ResourceUtils
+    public static File getPdfFileWithResourceUtils(String fileName) throws IOException {
+        return ResourceUtils.getFile("classpath:pdf/" + fileName);
     }
 }

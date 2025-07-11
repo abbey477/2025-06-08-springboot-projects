@@ -1,9 +1,8 @@
-package com.example.pdfextractor;
+package com.example.pdfextractor.runner;
 
 
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,12 +11,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.awt.Rectangle;
 import java.io.File;
 
-@SpringBootApplication
-public class PdfTableExtractApp implements CommandLineRunner {
 
-    public static void main(String[] args) {
-        SpringApplication.run(PdfTableExtractApp.class, args);
-    }
+
+
+public class PdfTableExtractApp2 implements CommandLineRunner {
+
 
     @Override
     public void run(String... args) throws Exception {

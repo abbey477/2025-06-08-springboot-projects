@@ -10,12 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.File;
 
-@SpringBootApplication
+
 public class PdfTableExtractApp implements CommandLineRunner {
 
-    public static void main(String[] args) {
-        SpringApplication.run(PdfTableExtractApp.class, args);
-    }
 
     @Override
     public void run(String... args) throws Exception {
