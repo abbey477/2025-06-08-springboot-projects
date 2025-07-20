@@ -1,10 +1,5 @@
 package com.mycompany.app7;
 
-import lombok.Builder;
-
-@Builder(toBuilder = true)
-record User(String name, int age, String email) {}
-
 public class RecordLombokTest {
     public static void main(String[] args) {
         System.out.println("=== Testing Record with Lombok Builder ===\n");
