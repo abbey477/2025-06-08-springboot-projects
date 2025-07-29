@@ -135,4 +135,18 @@ public class OECDParser {
         this.boundaries = new TableBoundaries(left, right, top, bottom);
     }
 
+    public List<String> createRowString(List<TableRow> rows,List<String> outputRows) {
+        for (TableRow row : rows) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 6; i++) {
+                sb.append(row.getCell(i)).append("|");
+            }
+            // Remove the last pipe character
+            if (!sb.isEmpty()) {
+                sb.setLength(sb.length() - 1);
+            }
+            outputRows.add(sb.toString());
+        }
+        return outputRows;
+    }
 }
