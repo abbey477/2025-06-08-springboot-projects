@@ -1,4 +1,4 @@
-package com.mycompany.app4;
+package com.mycompany.app4.process;
 
 
 import java.util.*;
@@ -9,13 +9,14 @@ import java.util.*;
  */
 public class TableProcessor {
     
-    private TableBoundaries boundaries;  // Defines where columns are located
+    private final TableBoundaries boundaries;  // Defines where columns are located
     
     /**
      * Constructor
      * @param boundaries Table boundary settings for organizing text into columns
      */
     public TableProcessor(TableBoundaries boundaries) {
+        // Initialize with the boundaries that define column positions
         this.boundaries = boundaries;
     }
     

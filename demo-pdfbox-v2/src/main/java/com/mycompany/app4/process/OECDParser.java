@@ -1,6 +1,7 @@
-package com.mycompany.app4;
+package com.mycompany.app4.process;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -10,7 +11,7 @@ import java.util.List;
 public class OECDParser {
     
     private TableBoundaries boundaries;  // Current boundary settings
-    
+
     /**
      * Constructor with default boundaries
      * Uses standard settings that work for most OECD Country Risk PDFs
@@ -25,6 +26,7 @@ public class OECDParser {
      * @param boundaries Custom table boundary settings
      */
     public OECDParser(TableBoundaries boundaries) {
+        // Use provided boundaries instead of default ones
         this.boundaries = boundaries;
     }
     
@@ -82,7 +84,7 @@ public class OECDParser {
      * @return List of table rows found on this page
      * @throws IOException If PDF stream cannot be read
      */
-    public List<TableRow> parsePage(java.io.InputStream pdfInputStream, int pageNumber) throws IOException {
+    public List<TableRow> parsePage(InputStream pdfInputStream, int pageNumber) throws IOException {
         // Create extractor with current boundaries
         PDFExtractor extractor = new PDFExtractor(boundaries);
         
@@ -106,7 +108,7 @@ public class OECDParser {
      * @return List of table rows found on this page
      * @throws IOException If PDF stream cannot be read
      */
-    public List<TableRow> parsePage(java.io.InputStream pdfInputStream, int pageNumber, TableBoundaries customBounds) throws IOException {
+    public List<TableRow> parsePage(InputStream pdfInputStream, int pageNumber, TableBoundaries customBounds) throws IOException {
         // Create extractor with the custom boundaries
         PDFExtractor extractor = new PDFExtractor(customBounds);
         
@@ -132,27 +134,5 @@ public class OECDParser {
     public void setBoundaries(float left, float right, float top, float bottom) {
         this.boundaries = new TableBoundaries(left, right, top, bottom);
     }
-    
-    /**
-     * Example usage demonstrating how to parse pages with different boundary settings
-     */
-    public static void main(String[] args) {
-        try {
-            String pdfPath = "path/to/pdf";  // Change this to your actual PDF file path
-            OECDParser parser = new OECDParser();
-            
-            // Parse regular pages (1-5) with standard boundaries
-            parser.parsePage(pdfPath, 1);  // First page
-            parser.parsePage(pdfPath, 2);  // Second page
-            // ... continue for pages 3, 4, 5
-            
-            // Parse last page (6) with smaller boundaries to avoid footer text
-            // The key change: bottom boundary is 600f instead of 700f (100 pixels smaller)
-            TableBoundaries smallerBounds = new TableBoundaries(50f, 590f, 140f, 600f);
-            parser.parsePage(pdfPath, 6, smallerBounds);
-            
-        } catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
+
 }

@@ -1,4 +1,4 @@
-package com.mycompany.app4;
+package com.mycompany.app4.process;
 
 /**
  * Simple table boundaries - defines where the table is located on the PDF page

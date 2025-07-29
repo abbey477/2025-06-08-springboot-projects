@@ -1,4 +1,4 @@
-package com.mycompany.app4;
+package com.mycompany.app4.process;
 
 /**
  * Simple table row with 6 columns

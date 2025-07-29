@@ -1,4 +1,4 @@
-package com.mycompany.app4;
+package com.mycompany.app4.process;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -14,13 +14,14 @@ import java.util.*;
  */
 public class PDFExtractor {
     
-    private TableBoundaries boundaries;  // Defines which area of the page to extract from
+    private final TableBoundaries boundaries;  // Defines which area of the page to extract from
     
     /**
      * Constructor
      * @param boundaries Table boundary settings that define where to look for text
      */
     public PDFExtractor(TableBoundaries boundaries) {
+        // Store the boundaries that define the table area
         this.boundaries = boundaries;
     }
     

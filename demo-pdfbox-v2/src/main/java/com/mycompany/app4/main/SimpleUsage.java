@@ -1,6 +1,9 @@
-package com.mycompany.app4;
+package com.mycompany.app4.main;
 
 import com.mycompany.app.ResourceFileHelper;
+import com.mycompany.app4.process.TableBoundaries;
+import com.mycompany.app4.process.TableRow;
+import com.mycompany.app4.process.OECDParser;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,28 +17,11 @@ import java.util.ArrayList;
  * Updated to support both file path and InputStream (useful for downloaded PDFs)
  */
 public class SimpleUsage {
-    
-    public static void main(String[] args) {
-        try {
-            // Example 1: Using file path (when PDF is saved locally)
-            processFromFilePath();
-            
-            // Example 2: Using InputStream (when PDF is downloaded/streamed)
-            processFromInputStream();
-            
-        } catch (IOException e) {
-            System.err.println("Error processing PDF file:");
-            System.err.println("  " + e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Unexpected error occurred:");
-            System.err.println("  " + e.getMessage());
-        }
-    }
-    
+
     /**
      * Process PDF using file path (original method)
      */
-    private static void processFromFilePath() throws IOException {
+    public static void processFromFilePath() throws IOException {
         System.out.println("=== PROCESSING FROM FILE PATH ===");
         
         // Step 1: Set your PDF file path
@@ -64,7 +50,7 @@ public class SimpleUsage {
     /**
      * Process PDF using InputStream (useful for downloaded PDFs)
      */
-    private static void processFromInputStream() throws IOException {
+    public static void processFromInputStream() throws IOException {
         System.out.println("\n=== PROCESSING FROM INPUTSTREAM ===");
         
         // Step 1: Get InputStream (this example uses FileInputStream, but could be from HTTP download)

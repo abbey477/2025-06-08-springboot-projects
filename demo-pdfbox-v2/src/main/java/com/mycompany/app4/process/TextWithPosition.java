@@ -1,4 +1,4 @@
-package com.mycompany.app4;
+package com.mycompany.app4.process;
 
 /**
  * Text with its position on the page
