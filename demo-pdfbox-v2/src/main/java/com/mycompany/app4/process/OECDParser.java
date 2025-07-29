@@ -140,7 +140,7 @@ public class OECDParser {
 
     /**
      * Converts a list of TableRow objects into a list of pipe-separated string representations.
-     * Each row is converted to a string with up to 6 cells, separated by '|'.
+     * Each row is converted to a string with up to 6 cells, separated by '||'.
      * The resulting strings are added to the provided outputRows list.
      *
      * @param rows List of TableRow objects to convert
