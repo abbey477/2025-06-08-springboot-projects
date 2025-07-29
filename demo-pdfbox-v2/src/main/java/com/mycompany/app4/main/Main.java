@@ -4,9 +4,12 @@ import com.mycompany.app4.domain.BoundaryFactory;
 import com.mycompany.app4.domain.TableBoundaryDTO;
 import com.mycompany.app4.process.OECDParser;
 import com.mycompany.app4.process.TableBoundaries;
+import com.mycompany.app4.process.TableRow;
 import com.mycompany.app4.util.ResourceFileHelper;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -52,11 +55,15 @@ public class Main {
     public static void example02(String pdfPath) {
         try {
             // Example 1: Using file path (when PDF is saved locally)
-            SimpleUsage.processFromFilePath(pdfPath);
+            List<TableRow> listOne = SimpleUsage.processFromFilePath(pdfPath);
 
             // Example 2: Using InputStream (when PDF is downloaded/streamed)
-            SimpleUsage.processFromInputStream(pdfPath);
+            List<TableRow> list2 = SimpleUsage.processFromInputStream(pdfPath);
 
+            List<String> response = createRowString(listOne, new ArrayList<String>());
+            for (String row : response) {
+                System.out.println(row);
+            }
         } catch (IOException e) {
             System.err.println("Error processing PDF file:");
             System.err.println("  " + e.getMessage());
@@ -64,5 +71,29 @@ public class Main {
             System.err.println("Unexpected error occurred:");
             System.err.println("  " + e.getMessage());
         }
+    }
+
+    /**
+     * Converts a list of TableRow objects into a list of pipe-separated string representations.
+     * Each row is converted to a string with up to 6 cells, separated by '||'.
+     * The resulting strings are added to the provided outputRows list.
+     *
+     * @param rows List of TableRow objects to convert
+     * @param outputRows List to which the resulting strings will be added
+     * @return The updated outputRows list containing string representations of the rows
+     */
+    public static List<String> createRowString(List<TableRow> rows, List<String> outputRows) {
+        for (TableRow row : rows) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 6; i++) {
+                sb.append(row.getCell(i)).append("||");
+            }
+            // Remove the last 2 pipe characters
+            if (!sb.isEmpty() && sb.length() >= 2) {
+                sb.setLength(sb.length() - 2);
+            }
+            outputRows.add(sb.toString());
+        }
+        return outputRows;
     }
 }

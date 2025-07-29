@@ -135,31 +135,4 @@ public class OECDParser {
         this.boundaries = new TableBoundaries(left, right, top, bottom);
     }
 
-
-
-
-    /**
-     * Converts a list of TableRow objects into a list of pipe-separated string representations.
-     * Each row is converted to a string with up to 6 cells, separated by '||'.
-     * The resulting strings are added to the provided outputRows list.
-     *
-     * @param rows List of TableRow objects to convert
-     * @param outputRows List to which the resulting strings will be added
-     * @return The updated outputRows list containing string representations of the rows
-     */
-    public List<String> createRowString(List<TableRow> rows, List<String> outputRows) {
-        for (TableRow row : rows) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < 6; i++) {
-                sb.append(row.getCell(i)).append("||");
-            }
-            // Remove the last 2 pipe characters
-            if (!sb.isEmpty() && sb.length() >= 2) {
-                sb.setLength(sb.length() - 2);
-            }
-            outputRows.add(sb.toString());
-        }
-        return outputRows;
-    }
-
 }

@@ -22,7 +22,7 @@ public class SimpleUsage {
     /**
      * Process PDF using file path (original method)
      */
-    public static void processFromFilePath(String pdfPath) throws IOException {
+    public static List<TableRow> processFromFilePath(String pdfPath) throws IOException {
         System.out.println("=== PROCESSING FROM FILE PATH ===");
         
         // Step 1: Set boundaries
@@ -45,12 +45,14 @@ public class SimpleUsage {
         allData.addAll(lastPageData);
         
         System.out.println("File path method - Total rows: " + allData.size());
+
+        return allData;
     }
     
     /**
      * Process PDF using InputStream (useful for downloaded PDFs)
      */
-    public static void processFromInputStream(String pdfPath ) throws IOException {
+    public static List<TableRow> processFromInputStream(String pdfPath ) throws IOException {
         System.out.println("\n=== PROCESSING FROM INPUTSTREAM ===");
         
         // Step 1: Get InputStream (this example uses FileInputStream, but could be from HTTP download)
@@ -86,6 +88,8 @@ public class SimpleUsage {
             System.out.printf("Row %d: [%s] | [%s] | [%s]%n", 
                 i + 1, row.getCell(0), row.getCell(1), row.getCell(2));
         }
+
+        return allData;
     }
     
     /**
