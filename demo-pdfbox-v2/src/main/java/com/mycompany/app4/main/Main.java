@@ -1,11 +1,11 @@
 package com.mycompany.app4.main;
 
+import com.mycompany.app4.domain.BoundaryFactory;
+import com.mycompany.app4.domain.TableBoundaryDTO;
 import com.mycompany.app4.process.OECDParser;
 import com.mycompany.app4.process.TableBoundaries;
-import com.mycompany.app4.util.Const;
 import com.mycompany.app4.util.ResourceFileHelper;
 
-import java.io.File;
 import java.io.IOException;
 
 public class Main {
@@ -13,17 +13,12 @@ public class Main {
     // Example usage
     public static void main(String[] args) {
         try {
-            // For file in src/main/resources/pdf/oecd-report.pdf
-            File pdfFile = ResourceFileHelper.getResourceFile(Const.PDF_FILE_PATH);
-            System.out.println("PDF Path: " + pdfFile.getAbsolutePath());
-
             // Just get the path as string
-            String filePath = ResourceFileHelper.getResourcePath(Const.PDF_FILE_PATH);
-            System.out.println("File Path: " + filePath);
+            String filePath = ResourceFileHelper.getOecdFilePath();
 
             example01(filePath);
 
-            example02();
+            example02(filePath);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
@@ -35,7 +30,9 @@ public class Main {
      */
     public static void example01(String pdfPath) {
         try {
-            OECDParser parser = new OECDParser();
+            TableBoundaryDTO pageOneToFiveBoundary = BoundaryFactory.getPageOneToFiveBoundary();
+            TableBoundaries boundaries = new TableBoundaries(pageOneToFiveBoundary);
+            OECDParser parser = new OECDParser(boundaries);
 
             // Parse regular pages (1-5) with standard boundaries
             parser.parsePage(pdfPath, 1);  // First page
@@ -52,13 +49,13 @@ public class Main {
         }
     }
 
-    public static void example02() {
+    public static void example02(String pdfPath) {
         try {
             // Example 1: Using file path (when PDF is saved locally)
-            SimpleUsage.processFromFilePath();
+            SimpleUsage.processFromFilePath(pdfPath);
 
             // Example 2: Using InputStream (when PDF is downloaded/streamed)
-            SimpleUsage.processFromInputStream();
+            SimpleUsage.processFromInputStream(pdfPath);
 
         } catch (IOException e) {
             System.err.println("Error processing PDF file:");

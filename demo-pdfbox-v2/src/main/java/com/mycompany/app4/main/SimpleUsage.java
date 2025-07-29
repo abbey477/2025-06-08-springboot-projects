@@ -1,9 +1,10 @@
 package com.mycompany.app4.main;
 
-import com.mycompany.app.ResourceFileHelper;
+import com.mycompany.app4.domain.BoundaryFactory;
 import com.mycompany.app4.process.TableBoundaries;
 import com.mycompany.app4.process.TableRow;
 import com.mycompany.app4.process.OECDParser;
+import com.mycompany.app4.util.ResourceFileHelper;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,15 +22,14 @@ public class SimpleUsage {
     /**
      * Process PDF using file path (original method)
      */
-    public static void processFromFilePath() throws IOException {
+    public static void processFromFilePath(String pdfPath) throws IOException {
         System.out.println("=== PROCESSING FROM FILE PATH ===");
         
-        // Step 1: Set your PDF file path
-        File filePath = ResourceFileHelper.getResourceFile("pdf/cre-crc-current-english.pdf");
-        String pdfPath = filePath.getAbsolutePath();
+        // Step 1: Set boundaries
+        TableBoundaries boundaries = new TableBoundaries(BoundaryFactory.getPageOneToFiveBoundary());
         
         // Step 2: Create the parser
-        OECDParser parser = new OECDParser();
+        OECDParser parser = new OECDParser(boundaries);
         
         // Step 3: Process pages 1-5 with standard boundaries
         List<TableRow> allData = new ArrayList<>();
@@ -50,15 +50,14 @@ public class SimpleUsage {
     /**
      * Process PDF using InputStream (useful for downloaded PDFs)
      */
-    public static void processFromInputStream() throws IOException {
+    public static void processFromInputStream(String pdfPath ) throws IOException {
         System.out.println("\n=== PROCESSING FROM INPUTSTREAM ===");
         
         // Step 1: Get InputStream (this example uses FileInputStream, but could be from HTTP download)
-        File filePath = ResourceFileHelper.getResourceFile("pdf/cre-crc-current-english.pdf");
-        String pdfPath = filePath.getAbsolutePath();
         
         // Step 2: Create the parser
-        OECDParser parser = new OECDParser();
+        TableBoundaries boundaries = new TableBoundaries(BoundaryFactory.getPageOneToFiveBoundary());
+        OECDParser parser = new OECDParser(boundaries);
         
         // Step 3: Process pages 1-5 with standard boundaries
         List<TableRow> allData = new ArrayList<>();
@@ -93,8 +92,9 @@ public class SimpleUsage {
      * Example method for processing downloaded PDF (simulated)
      * In real usage, you would get the InputStream from HTTP response
      */
-    public static List<TableRow> processDownloadedPDF(InputStream downloadedPdfStream) throws IOException {
-        OECDParser parser = new OECDParser();
+    private static List<TableRow> processDownloadedPDF(InputStream downloadedPdfStream) throws IOException {
+        TableBoundaries boundaries = new TableBoundaries(BoundaryFactory.getPageOneToFiveBoundary());
+        OECDParser parser = new OECDParser(boundaries);
         List<TableRow> allData = new ArrayList<>();
         
         // Note: In real usage, you'd need to handle the fact that InputStream can only be read once

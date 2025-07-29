@@ -1,5 +1,7 @@
 package com.mycompany.app4.process;
 
+import com.mycompany.app4.domain.TableBoundaryDTO;
+
 /**
  * Simple table boundaries - defines where the table is located on the PDF page
  * This tells the parser which area of the page to look for table data
@@ -21,6 +23,14 @@ public class TableBoundaries {
      */
     public TableBoundaries() {
         // Uses the default values defined above
+    }
+
+    public TableBoundaries(TableBoundaryDTO tableBoundaryDTO) {
+        this.left = tableBoundaryDTO.left();
+        this.right = tableBoundaryDTO.right();
+        this.top = tableBoundaryDTO.top();
+        this.bottom = tableBoundaryDTO.bottom();
+        // Note: columns array stays the same unless you call setColumns()
     }
     
     /**

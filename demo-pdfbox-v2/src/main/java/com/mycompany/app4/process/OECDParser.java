@@ -16,9 +16,9 @@ public class OECDParser {
      * Constructor with default boundaries
      * Uses standard settings that work for most OECD Country Risk PDFs
      */
-    public OECDParser() {
+    /*public OECDParser() {
         this.boundaries = new TableBoundaries();
-    }
+    }*/
     
     /**
      * Constructor with custom boundaries

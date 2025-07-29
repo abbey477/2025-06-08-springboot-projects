@@ -50,5 +50,16 @@ public class ResourceFileHelper {
         return getResourceFile(fileName).getAbsolutePath();
     }
 
+    public static String getOecdFilePath() {
+        // For file in src/main/resources/pdf/oecd-report.pdf
+        File pdfFile = ResourceFileHelper.getResourceFile(Const.PDF_FILE_PATH);
+        System.out.println("PDF Path: " + pdfFile.getAbsolutePath());
+
+        // Just get the path as string
+        String filePath = ResourceFileHelper.getResourcePath(Const.PDF_FILE_PATH);
+        System.out.println("File Path: " + filePath);
+
+        return filePath;
+    }
 
 }
