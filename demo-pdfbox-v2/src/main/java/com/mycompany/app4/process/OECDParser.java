@@ -154,7 +154,7 @@ public class OECDParser {
                 sb.append(row.getCell(i)).append("||");
             }
             // Remove the last 2 pipe characters
-            if (!sb.isEmpty()) {
+            if (!sb.isEmpty() && sb.length() >= 2) {
                 sb.setLength(sb.length() - 2);
             }
             outputRows.add(sb.toString());
