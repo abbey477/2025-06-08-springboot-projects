@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Fragment that returns multiple hx-partial elements -->
+<th:block th:fragment="partials">
+    <!-- Update notification badge -->
+    <hx-partial hx-target="#notification-badge" hx-swap="innerHTML">
+        <button class="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+            <span th:if="${notificationCount > 0}" 
+                  class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+                  th:text="${notificationCount}">5</span>
+        </button>
+    </hx-partial>
+    
+    <!-- Update messages/activity log -->
+    <hx-partial hx-target="#messages" hx-swap="innerHTML">
+        <div th:each="message : ${messages}" 
+             class="mb-2 p-2 bg-gray-50 rounded text-sm text-gray-600">
+            <span th:text="${message}">Message</span>
+        </div>
+    </hx-partial>
+    
+    <!-- Update task list -->
+    <hx-partial hx-target="#task-list" hx-swap="innerHTML">
+        <div th:each="task : ${tasks}" class="border-b border-gray-200 py-2">
+            <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                <input type="checkbox" 
+                       th:checked="${task.completed}"
+                       hx-post="'/toggle-task/' + ${task.id}"
+                       hx-trigger="change"
+                       class="mr-3 h-4 w-4 text-blue-600">
+                <span th:text="${task.name}" 
+                      th:classappend="${task.completed} ? 'line-through text-gray-400' : ''">
+                    Task Name
+                </span>
+            </label>
+        </div>
+    </hx-partial>
+    
+    <!-- Update time display -->
+    <hx-partial hx-target="#time-display" hx-swap="innerHTML">
+        <span th:text="${currentTime}">00:00:00</span>
+    </hx-partial>
+</th:block>
+
+</body>
+</html>

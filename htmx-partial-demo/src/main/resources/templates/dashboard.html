@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>htmx 4.0 hx-partial Demo</title>
+    
+    <!-- htmx 4.0 alpha -->
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@4.0.0-alpha4/dist/htmx.min.js"></script>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        .htmx-indicator {
+            display: none;
+        }
+        .htmx-request .htmx-indicator {
+            display: inline-block;
+        }
+        @keyframes pulse-bg {
+            0% { background-color: rgb(249 250 251); }
+            50% { background-color: rgb(219 234 254); }
+            100% { background-color: rgb(249 250 251); }
+        }
+        .htmx-settling {
+            animation: pulse-bg 0.5s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="flex justify-between items-center">
+                <h1 class="text-3xl font-bold text-gray-800">
+                    htmx 4.0 <code>&lt;hx-partial&gt;</code> Demo
+                </h1>
+                <div class="flex items-center space-x-4">
+                    <!-- Notification Badge -->
+                    <div id="notification-badge" class="relative">
+                        <button class="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                            </svg>
+                            <span th:if="${notificationCount > 0}" 
+                                  class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+                                  th:text="${notificationCount}">5</span>
+                        </button>
+                    </div>
+                    <!-- Time Display -->
+                    <div id="time-display" class="text-gray-600">
+                        <span th:text="${currentTime}">00:00:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Tasks Section -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4 text-gray-700">Tasks</h2>
+                
+                <!-- Add Task Form -->
+                <form hx-post="/add-task" 
+                      hx-trigger="submit"
+                      class="mb-4">
+                    <div class="flex gap-2">
+                        <input type="text" 
+                               name="taskName" 
+                               placeholder="Enter new task..." 
+                               required
+                               class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button type="submit" 
+                                class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+                            Add Task
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Task List -->
+                <div id="task-list">
+                    <div th:each="task : ${tasks}" class="border-b border-gray-200 py-2">
+                        <label class="flex items-center cursor-pointer hover:bg-gray-50 p-2 rounded">
+                            <input type="checkbox" 
+                                   th:checked="${task.completed}"
+                                   hx-post="'/toggle-task/' + ${task.id}"
+                                   hx-trigger="change"
+                                   class="mr-3 h-4 w-4 text-blue-600">
+                            <span th:text="${task.name}" 
+                                  th:classappend="${task.completed} ? 'line-through text-gray-400' : ''">
+                                Task Name
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Section -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4 text-gray-700">Activity Log</h2>
+                <div id="messages" class="max-h-64 overflow-y-auto">
+                    <div th:each="message : ${messages}" 
+                         class="mb-2 p-2 bg-gray-50 rounded text-sm text-gray-600">
+                        <span th:text="${message}">Message</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="mt-6 flex gap-4">
+            <button hx-post="/refresh-all"
+                    class="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
+                <span class="htmx-indicator">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                </span>
+                Refresh All (Multiple Partials)
+            </button>
+            
+            <button hx-post="/clear-notifications"
+                    class="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600">
+                Clear Notifications
+            </button>
+        </div>
+
+        <!-- Info Box -->
+        <div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-blue-900 mb-2">How hx-partial works:</h3>
+            <ul class="space-y-2 text-blue-800">
+                <li>• Click "Refresh All" to see multiple <code>&lt;hx-partial&gt;</code> elements update different parts of the page</li>
+                <li>• Add or toggle tasks to see targeted updates with partials</li>
+                <li>• Clear notifications to see coordinated updates across components</li>
+                <li>• Each <code>&lt;hx-partial&gt;</code> specifies its own target and swap strategy</li>
+                <li>• View the network tab to see the partial responses being returned</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

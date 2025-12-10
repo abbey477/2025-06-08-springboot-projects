@@ -1,0 +1,82 @@
+# Application Configuration
+app:
+  processing:
+    enabled: true
+    batch-size: 150
+    schedule-rate: 10000  # 10 seconds in milliseconds
+  database:
+    url: jdbc:h2:mem:standalone
+    username: admin
+    password: secret
+    max-connections: 20
+
+# Spring Configuration
+spring:
+  application:
+    name: standalone-app
+  main:
+    web-application-type: none
+    banner-mode: console
+  profiles:
+    active: default
+
+# Logging Configuration
+logging:
+  level:
+    com.example.standalone: INFO
+    com.example.standalone.service: DEBUG
+    org.springframework.boot: WARN
+    org.springframework.scheduling: INFO
+    org.springframework.context: WARN
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/standalone-app.log
+    max-size: 10MB
+    max-history: 30
+
+# Management and Monitoring
+management:
+  endpoints:
+    enabled-by-default: false
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+
+---
+# Development Profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+app:
+  processing:
+    schedule-rate: 5000  # 5 seconds for development
+
+logging:
+  level:
+    com.example.standalone: DEBUG
+    org.springframework: DEBUG
+
+---
+# Production Profile
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+app:
+  processing:
+    batch-size: 500
+    schedule-rate: 30000  # 30 seconds for production
+
+logging:
+  level:
+    com.example.standalone: INFO
+    org.springframework: WARN
+  file:
+    name: /var/log/standalone-app/app.log
