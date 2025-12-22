@@ -43,7 +43,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/abiodun/Googledrive/workspace-github-code/2024-public-text-files",
+    "last_opened_file_path": "/home/abiodun/development/spring-boot-jte-example-main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -133,6 +133,7 @@
       <workItem from="1758403610666" duration="81000" />
       <workItem from="1758403709333" duration="1446000" />
       <workItem from="1765743885421" duration="71000" />
+      <workItem from="1765934375169" duration="36000" />
     </task>
     <servers />
   </component>
